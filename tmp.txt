@@ -1,0 +1,233 @@
+﻿<div class="container-fluid" style="background:#ccc; padding:15px 0;width:100%;margin:0;">
+<div style="text-align:center;">
+  <div class="header-email"  style="width:100%;max-width:630px;background:#fff;display:inline-block;"> <img src="/assets/images/header-email.png"> </div>
+</div>
+<div style="text-align:center;">
+  <div id="content-primary-email" class="container" style="width:100%;max-width:630px;background:#fff;display:inline-block;padding: 10px 15px 30px 15px; font-family: Arial,Helvetica,sans-serif;text-align:left;box-sizing:border-box;">
+    <div class="content-email">
+      <div>
+        <h1 style="    font-size: 16px;
+
+    font-weight: bold;
+
+    color: #444;
+
+    padding: 0 0 5px 0;
+
+    margin: 0;">
+        Cảm ơn quý khách <?php echo $_POST["s_name"]; ?> đã đặt hàng tại Thuocmoctocnhatban.vn</h1>
+
+                    <p style="    margin: 4px 0;
+
+    font-family: Arial,Helvetica,sans-serif;
+
+    font-size: 12px;
+
+    color: #444;
+
+    line-height: 18px;
+
+    font-weight: normal;"> Chúng tôi xin thông báo đơn hàng<strong> #<?php echo $_POST["s_ma_don_hang"]; ?></strong> của quý khách đã được tiếp nhận và đang trong quá trình xử lý. <br>
+
+                        Thuocmoctocnhatban.vn sẽ thông báo đến quý khách ngay khi hàng chuẩn bị được giao. </p>
+
+                </div>
+
+                <div class="info-order-email">
+
+                    <h2 style="font-size: 13px; font-weight: bold; color: #66ad44; text-transform: uppercase; margin: 20px 0 0 0; border-bottom: 1px solid #ddd; "> Thông tin đơn hàng #<?php echo $_POST["s_ma_don_hang"]; ?> <span style="font-size:12px;color:#777;text-transform:none;font-weight:normal"><?php echo $_POST["s_ngay_thang"]; ?></span> </h2>
+
+                </div>
+
+                <div class=" info-check-out-email" >
+
+                    <div style="width:50%;float:left;">
+
+                        <h3 style="    padding: 6px 9px 0px 0px;
+
+    font-family: Arial,Helvetica,sans-serif;
+
+    font-size: 12px;
+
+    color: #444;
+
+    font-weight: bold;"> Thông tin thanh toán </h3>
+
+                        <p style="    font-family: Arial,Helvetica,sans-serif;
+
+    font-size: 12px;
+
+    color: #444;
+
+    line-height: 18px;
+
+    font-weight: normal;"> <?php echo $_POST["s_name"]; ?> <br>
+
+                            <a  target="_blank" style="  text-decoration:underline;  font-family: Arial,Helvetica,sans-serif;
+
+    font-size: 12px;
+
+    color: #66ad44;
+
+    line-height: 18px;
+
+"><?php echo $_POST["s_mail"]; ?></a><br>
+        <?php echo $_POST["s_tel"]; ?> </p>
+
+                    </div>
+
+                    <div style="width:50%;float:left;">
+
+                        <h3 style="    padding: 6px 9px 0px 0px;
+
+    font-family: Arial,Helvetica,sans-serif;
+
+    font-size: 12px;
+
+    color: #444;
+
+    font-weight: bold;"> Địa chỉ giao hàng </h3>
+
+                        <p style="    font-family: Arial,Helvetica,sans-serif;
+
+    font-size: 12px;
+
+    color: #444;
+
+    line-height: 18px;
+
+    font-weight: normal;"> <?php echo $_POST["s_address"]; ?> </p>
+
+                    </div>
+
+                    <div style="clear:both"></div>
+
+                </div>
+
+                <p style="    font-family: Arial,Helvetica,sans-serif;
+
+    font-size: 12px;
+
+    color: #444;
+
+    line-height: 18px;
+
+    font-weight: normal;margin:0;"><strong> Phương thức thanh toán : </strong><?php echo $_POST["s_checkout"]; ?>
+        </p>
+        <p style="    font-family: Arial,Helvetica,sans-serif;
+
+    font-size: 12px;
+
+    color: #444;
+
+    margin-top:10px;
+
+    line-height: 18px;
+
+    font-weight: normal;font-style:italic;"> <strong>Lưu ý :</strong> Với những đơn hàng thanh toán trả trước, xin vui lòng đảm bảo người nhận hàng đúng thông tin đã đăng ký trong đơn hàng, và chuẩn bị giấy tờ tùy thân để đơn vị giao nhận có thể xác thực thông tin khi giao hàng. </p>
+        <div class="">
+          <h2 style="font-size: 13px; font-weight: bold; color: #66ad44; text-transform: uppercase; margin: 20px 0 0 0; border-bottom: 1px solid #ddd; ">Chi tiết đơn hàng</h2>
+        </div>
+        <div class=" detail-order-email" style="margin-top:15px;">
+          <?php  $args=array(
+
+	'post_type' => 'san-pham', 
+
+	'orderby' => 'post__in', 
+
+	'post__in' => $result_product_id,
+
+	'posts_per_page'=>-1);
+
+
+
+                        $query = new WP_Query( $args);  ?>
+          <?php $stt = 1; if ( $query->have_posts() ) : ?>
+          <?php 
+
+			$quantity=0;
+
+            $product_price=0;
+
+            $total_price=0; /*Đặt các giá trị tính tiền bằng 0*/
+
+	    	?>
+          <table width="100%"  style="    border-spacing: 0; font-size:13px; border:none;
+
+    border-collapse: collapse;">
+            <tr>
+              <td  style="padding:6px 9px;color:#fff;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:14px;background:#66ad44;"><strong>Sản phẩm</strong></td>
+              <td  style="padding:6px 9px;color:#fff;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:14px;background:#66ad44;"><strong>Đơn giá</strong></td>
+              <td  style="padding:6px 9px;color:#fff;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:14px;background:#66ad44;"><strong>Số lượng</strong></td>
+              <td  style="padding:6px 9px;color:#fff;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:14px;background:#66ad44;"><strong>Thành tiền</strong></td>
+            </tr>
+            <?php while ( $query->have_posts() ) : $query->the_post();?>
+            <?php  if(get_field('s_product_price_sale')) {$product_price = get_field('s_product_price_sale'); } else { $product_price = get_field('s_product_price');  	}  ?>
+            
+              <td  style="padding:6px 9px;color:#444;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:14px;background:#eee;border-bottom:1px dashed #ccc;"><?php the_title(); ?></td>
+              <td  style="padding:6px 9px;color:#444;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:14px;background:#eee;border-bottom:1px dashed #ccc;"><?php echo number_format($product_price).' <span style="font-size:10px;color:#666;">  VNĐ</span>'; ?></td>
+              <td  style="padding:6px 9px;color:#444;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:14px;background:#eee;border-bottom:1px dashed #ccc;text-align:center;"><?php  echo $quantity = $result_product_quantity[get_the_ID()];  ?></td>
+              <td  style="padding:6px 9px;color:#444;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:14px;background:#eee;border-bottom:1px dashed #ccc;"><?php $sub_total_price =   $quantity*$product_price;  echo number_format($sub_total_price).' <span style="font-size:10px;color:#666;">  VNĐ</span>'; ?></td>
+            </tr>
+            <?php 
+
+		   $total_price+=$sub_total_price;?>
+            <?php $stt++; endwhile; ?>
+            <tr>
+              <td colspan="3"  style="padding:6px 9px;color:#444;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:14px;background:#e2e2e2;"><strong>Tổng giá trị đơn hàng</strong></td>
+              <td   style="padding:6px 9px;color:#444;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:14px;background:#e2e2e2;"><strong><?php echo number_format($total_price).' <span style="font-size:10px;color:#666;">  VNĐ</span>'; ?></strong></td>
+            </tr>
+            <?php  wp_reset_query(); ?>
+          </table>
+          <?php endif; ?>
+        </div>
+      </div>
+      <div class="footer-email" style="margin-top:15px;">
+        <div class="">
+          <p style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#444;line-height:18px;font-weight:normal;border:1px #66ad44 dashed;padding:5px;list-style-type:none"> Chỉ cần email <a href="mailto:moctocchuyennghiep@gmail.com" target="_blank" style="  text-decoration:underline;  font-family: Arial,Helvetica,sans-serif;
+
+    font-size: 12px;
+
+    color: #66ad44;
+
+    line-height: 18px;
+
+">moctocchuyennghiep@gmail.com</a>, hoặc gọi số điện thoại 0901.40.80.86  - 0947.49.43.43 <br>
+            (8-21h cả T7,CN). Đội ngũ nhân viên của chúng tôi luôn sẵn sàng hỗ trợ bạn bất kì lúc nào. </p>
+          <p style="    font-family: Arial,Helvetica,sans-serif;
+
+    font-size: 12px;
+
+    color: #444;
+
+    line-height: 18px;
+
+    font-weight: normal;">Trường hợp quý khách có những băn khoăn về đơn hàng, có thể <a href="http://thuocmoctocnhatban.vn" target="_blank" style="  text-decoration:underline;  font-family: Arial,Helvetica,sans-serif;
+
+    font-size: 12px;
+
+    color: #66ad44;
+
+    line-height: 18px;
+
+">Đặt câu hỏi cho chúng tôi</a> hoặc liên hệ số 0901.40.80.86 - 0947.49.43.43 để được tư vấn miễn phí.<br>
+            <strong>Một lần nữa xin cảm ơn quý khách.</strong> </p>
+          <a href="http://thuocmoctocnhatban.vn" target="_blank" style=" text-decoration:none;   font-family: Arial,Helvetica,sans-serif;
+
+    font-size: 12px;
+
+    color: #66ad44;
+
+    line-height: 18px;
+
+"><strong style="float:right;">www.thuocmoctocnhatban.vn</strong> </a> </div>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center;">
+    <div  style="width:100%;max-width:630px;background:#ccc;display:inline-block; font-family: Arial,Helvetica,sans-serif;text-align:left;padding: 0;">
+      <p style="font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:15px;color:#333;padding:10px 0;margin:0px;font-weight:normal;text-align:left;"> Quý khách nhận được email này vì đã mua hàng tại Thuocmoctocnhatban.vn.<br>
+        <strong>Văn phòng công ty :</strong> 337/21 Trường Chinh, Phường 14, Quận Tân Bình, TP. HCM </p>
+    </div>
+  </div>
+</div>
